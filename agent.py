@@ -66,7 +66,7 @@ def run_agent(query: str, wardrobe: dict) -> dict:
         the run ended early and the later fields will still be None.
 
     ─────────────────────────────────────────────────────────────────────────
-    TODO — build this, following the branch rule you wrote in Milestone 2.
+    Task — 
 
       1. Start a session with new_session().
 
@@ -165,6 +165,8 @@ def run_agent(query: str, wardrobe: dict) -> dict:
                 session["outfit_suggestion"], session["selected_item"]
             )
             return session
+
+    return session
 
 
 # ── running it directly ───────────────────────────────────────────────────────

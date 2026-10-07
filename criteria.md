@@ -28,7 +28,7 @@ tool calls and returns a fit card — in at least 4 of 5 tries.
 <!-- Why 4 of 5 and not 5 of 5? Something about your search, probably —
      "my search is a plain keyword match and some phrasings will miss" is a
      real answer. -->
-
+The search logic is a keyword match with keyword overlap scoring. 4 out of 5 target allows for the occasional miss from the users typing in keywords that are not exact match, for example "shades" vs "sunglasses" will not be a match even though they mean the same thing.
 ---
 
 ## 2. An impossible query stops before the second tool
@@ -39,10 +39,11 @@ Given a query that matches no listings, the agent stops before calling
 **Why this target:**
 <!-- Why is 5 of 5 reasonable here when criterion 1 isn't? What's different
      about this path? -->
+The branch logic in `agent.py` is set up so that if there are no results in `search_listings()` then there will never be the case where the agent will call `suggest_outfit` so it will stop in 5 out of 5 tries in normal condition.
 
 ---
 
-## 3. Something about state
+## 3. The item id being passed from one tool function to another matches
 
 <!-- YOU WRITE THIS ONE.
 
@@ -54,37 +55,31 @@ Given a query that matches no listings, the agent stops before calling
      compares session["selected_item"] against what actually reached
      suggest_outfit is the shape you're after. -->
 
-
-
-**Why this target:**
-
-
-
----
-
-## 4. Something about the fit card
-
-<!-- YOU WRITE THIS ONE.
-
-     The fit card calls a model, so the same input can produce different words
-     each time. That's not a bug — it's the nature of the tool. So what would
-     make it acceptable?
-
-     Think about what you'd actually be unhappy to see. A caption that never
-     mentions the price? Two different items producing the same opening
-     sentence? A card longer than a caption anyone would post? Any of those can
-     be turned into a number. -->
+The `id` returned by `selected_item` matches the `id` of `suggested_outfit` in 5 out of 5 tries.
 
 
 
 **Why this target:**
-
+The static code logic passes the `id` from `selected_item` to `suggested_outfit` without changing the id, so we expect the id will match 5 out of 5 times.
 
 
 ---
 
-## 5. Your choice
+## 4. The fit card description is the right size
 
+<!-- YOU WRITE THIS ONE. -->
+
+The fit card is no more than 4 sentences long in 5 out of 5 tries when the same outfit request is asked.
+
+
+
+**Why this target:**
+In `tools.py` the `create_fit_card` function has a logic to limit the response to only 2-4 sentences so we should not expect anything longer than 4 sentences.
+
+
+---
+
+## 5. The ceiling price of an item is respected
 <!-- YOU WRITE THIS ONE TOO.
 
      Pick something you actually care about getting right. Speed, the empty
@@ -92,10 +87,10 @@ Given a query that matches no listings, the agent stops before calling
      search respects a price ceiling — anything, as long as it names a number
      or an observable outcome. -->
 
-
+The ceiling price of an item is respected
 
 **Why this target:**
-
+When the user search for an item with a `maximum_price`, the user will get a listing containing no items that cost more than that price in 5 out of 5 tries. 
 
 
 ---

@@ -40,7 +40,8 @@
 ## What This Does
 
 <!-- Three or four sentences: what a user asks for, and what they get back. -->
-
+This program allows the user to type in clothing items with descriptions about type, size, and price and get a listing of all 
+outfit items from its inventory which match those descriptions. If items are in the inventory, the listed items are displayed as pictures with text decriptions if found, otherwise, a no item found message will be displayed instead with suggestions on how to broaden the search.
 
 
 ---
@@ -59,24 +60,24 @@
 
 ### `search_listings`
 
-- **What it does:**
-- **Inputs:** <!-- name and type each: `max_price` (float), not "a price" -->
-- **Returns:**
-- **When it has nothing:**
+- **What it does:** Searches the listings.json file for clothing items with optional size and price ceiling which match the descriptions within
+- **Inputs:** `description` (string), `max_price` (float), `size` (string)
+- **Returns:** A list of best matched first items
+- **When it has nothing:** Returns empty list
 
 ### `suggest_outfit`
 
-- **What it does:**
-- **Inputs:**
-- **Returns:**
-- **When it has nothing:**
+- **What it does:** Suggests one or two outfits based on the user’s input of their thrifted item
+- **Inputs:** `new_item` (dictionary), `wardrobe` (dictionary)
+- **Returns:** A non empty string with outfit suggestions
+- **When it has nothing:** Returns a general styling advice
 
 ### `create_fit_card`
 
-- **What it does:**
-- **Inputs:**
-- **Returns:**
-- **When it has nothing:**
+- **What it does:** Creates a short caption about the outfit
+- **Inputs:** `outfit` (string), `new_item` (dictionary) 
+- **Returns:** Two to four sentences of description of the outfit
+- **When it has nothing:** Returns an explanation of why no outfit was returned instead of raising an error
 
 ---
 
@@ -97,7 +98,7 @@
 
 **Where it lives:** `agent.py::run_agent`
 
-**How the query is parsed:** <!-- regex, string splitting, or asking the model — say which -->
+**How the query is parsed:** Regex extracts an optional size and maximum price; the remaining text is used as the listing description.
 
 **What moves through the session:** <!-- which fields, in what order -->
 

@@ -40,8 +40,8 @@
 ## What This Does
 
 <!-- Three or four sentences: what a user asks for, and what they get back. -->
-This program allows the user to type in clothing items with descriptions about type, size, and price and get a listing of all 
-outfit items from its inventory which match those descriptions. If items are in the inventory, the listed items are displayed as pictures with text decriptions if found, otherwise, a no item found message will be displayed instead with suggestions on how to broaden the search.
+This program allows the user to type in clothing items with descriptions about type, size, and price and get a listing of 
+outfit items from its inventory which match those descriptions. The user can also ask for outfit suggestions by listing an clothing item and importing a list of their own clothing items. The program will return a listing the clothing articles and a cheery outfit description of 2 to 4 sentences long. 
 
 
 ---
@@ -77,7 +77,7 @@ outfit items from its inventory which match those descriptions. If items are in 
 - **What it does:** Creates a short caption about the outfit
 - **Inputs:** `outfit` (string), `new_item` (dictionary) 
 - **Returns:** Two to four sentences of description of the outfit
-- **When it has nothing:** Returns an explanation of why no outfit was returned instead of raising an error
+- **When it has nothing:** Returns an explanation of why no outfit was returned and a suggestion of how to expand search results
 
 ---
 

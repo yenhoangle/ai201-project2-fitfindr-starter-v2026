@@ -94,13 +94,23 @@ outfit items from its inventory which match those descriptions. If items are in 
      The grader checks your code against what you claim here, so the file and
      function have to be real. -->
 
-**Branch rule:**
+
+**Branch rule:** In the case of search_listings returns an empty list, put a message in session["error"] telling the user to broaden price, size, or description and stop. Otherwise, take the first result as session["selected_item"] and go to suggest_outfit.
 
 **Where it lives:** `agent.py::run_agent`
 
 **How the query is parsed:** Regex extracts an optional size and maximum price; the remaining text is used as the listing description.
 
 **What moves through the session:** <!-- which fields, in what order -->
+In function order of first to last:
+`query` - user input
+`wardrobe` - user input
+`parsed` - from the query
+`search_results` - populated as the non-empty output of `search_listings` on the query
+`error` - a branch result that gets populated when the results is empty
+`selected_item` - first listing dictionary item of `search_results`
+`outfit_suggestion` - the agent's description of the suggested outfit
+`fit_card` - description combined from `outfit_suggestion` and `wardrobe`
 
 ---
 

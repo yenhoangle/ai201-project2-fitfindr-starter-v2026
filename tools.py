@@ -154,9 +154,9 @@ def search_listings(
                 best = 0.0
                 for candidate in text_terms:
                     best = max(best, SequenceMatcher(None, term, candidate).ratio())
-                fuzzy_bonus += best
-            similarity = SequenceMatcher(None, description.lower(), text.lower()).ratio()
-            score = (overlap * 8.0) + (fuzzy_bonus * 1.2) + (similarity * 2.0)
+                if best >= 0.8:
+                    fuzzy_bonus += best
+            score = (overlap * 8.0) + (fuzzy_bonus * 1.2)
 
         if score > 0:
             scored.append((score, item))

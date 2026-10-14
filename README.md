@@ -234,8 +234,6 @@ Output copied from `results/run_2026-10-13_2209_before.md` produced by `run_eval
 - search_results: 0
 
 Trace:
-
-```
 [1] parse_query
       in:  designer ballgown size XXS under $5
       out: {'description': 'designer ballgown', 'size': 'XXS', 'max_price': 5.0}
@@ -243,7 +241,7 @@ Trace:
       in:  {'description': 'designer ballgown', 'size': 'XXS', 'max_price': 5.0}
       out: [] (empty)
       →    branch: empty, stopping before suggest_outfit
-```
+
 ```
 
 ---

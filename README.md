@@ -272,13 +272,82 @@ that produced it:
 **Happy path**
 
 ```
+python app.py ask 'vintage graphic tee under $20' --trace
+[1] parse_query
+      in:  vintage graphic tee under $20
+      out: {'description': 'vintage graphic tee', 'size': None, 'max_price': 20.0}
+[2] search_listings (via MCP)
+      in:  {'description': 'vintage graphic tee', 'size': None, 'max_price': 20.0}
+      out: 8 items: Y2K Baby Tee — Butterfly Print, Vintage Band Tee — Faded Grey, Mesh Long-Sleeve Top — Black … +5 more
+      →    branch: results, selected lst_002
+[3] suggest_outfit
+      in:  {'new_item': 'Y2K Baby Tee — Butterfly Print', 'wardrobe_items': 10}
+      out: Here is an effortless, throwback-inspired look using your new Depop find:  **The Outfit:** *   **New Item:** Y…
+[4] create_fit_card
+      in:  {'outfit': 'Here is an effortless, throwback-inspired look using your new Depop find:\n\n**The Outfit:**\n*   …
+      out: Channeling my inner 2000s off-duty model with this butterfly print baby tee I just scored. Honestly, nothing b…
 
+  Found:    Y2K Baby Tee — Butterfly Print — $18.0 on depop
+
+  Outfit:   Here is an effortless, throwback-inspired look using your new Depop find:
+
+**The Outfit:**
+*   **New Item:** Y2K Butterfly Baby Tee
+*   **Bottoms:** Baggy straight-leg jeans (dark wash)
+*   **Outerwear:** Vintage black denim jacket
+*   **Shoes:** Chunky white sneakers
+*   **Accessories:** Black crossbody bag
+
+**Style Note:**
+This is peak 2000s off-duty model. Pairing the fitted, pastel baby tee with heavy dark-wash denim creates that classic tight-top-baggy-bottom proportion, while the black denim jacket and chunky sneakers keep it grounded, effortless, and wearable for everyday.
+
+  Fit card: Channeling my inner 2000s off-duty model with this butterfly print baby tee I just scored. Honestly, nothing beats finding a fitted little top like this for only $18 on Depop. Paired it with baggy denim and chunky sneakersso I didn't have to overthink it today.
+
+0 model calls this session, 2 served from cache
 ```
 
 **Empty search**
 
 ```
+ python app.py ask '...' --trace         
+[1] parse_query
+      in:  ...
+      out: {'description': '', 'size': None, 'max_price': None}
+[2] search_listings (via MCP)
+      in:  {'description': '', 'size': None, 'max_price': None}
+      out: 10 items: Vintage Levi's 501 Jeans — Medium Wash, Y2K Baby Tee — Butterfly Print, Oversized Flannel Shirt — Plaid Red/Black … +7 more
+      →    branch: results, selected lst_001
+[3] suggest_outfit
+      in:  {'new_item': "Vintage Levi's 501 Jeans — Medium Wash", 'wardrobe_items': 10}
+      out: Here are two ways to style those vintage Levi's 501s using pieces you already own:  **Look 1: Off-Duty Cool** …
+[4] create_fit_card
+      in:  {'outfit': "Here are two ways to style those vintage Levi's 501s using pieces you already own:\n\n**Look 1: Of…
+      out: Finally hunted down the ultimate off-duty model jeans and honestly, I might never take these vintage Levi's 50…
 
+  Found:    Vintage Levi's 501 Jeans — Medium Wash — $38.0 on depop
+
+  Outfit:   Here are two ways to style those vintage Levi's 501s using pieces you already own:
+
+**Look 1: Off-Duty Cool**
+*   **Top:** White ribbed tank top
+*   **Outerwear:** Vintage black denim jacket 
+*   **Shoes:** Chunky white sneakers
+*   **Accessories:** Black crossbody bag
+
+**Style Note:** A classic double-denim moment that feels effortlessly cool. The crisp white tank keeps it fresh for daytime, while the chunky sneakers and black crossbody add that relaxed, 90s off-duty model energy.
+
+***
+
+**Look 2: Edgy & Laid-Back**
+*   **Top:** Oversized grey crewneck sweatshirt
+*   **Shoes:** Black combat boots
+*   **Accessories:** Brown leather belt
+
+**Style Note:** High-low styling at its best. Tucking the heavy grey crewneck into the 501s with a brown belt grounds the look, and the black combat boots add a tough, utilitarian edge to the classic medium-wash denim.
+
+  Fit card: Finally hunted down the ultimate off-duty model jeans and honestly, I might never take these vintage Levi's 501s off. Snagged them on Depop for just $38, and they’ve got that exact 90s broken-in feel right out of the box. Going to live in these with chunky sneakers and oversized crewnecks all season long.
+
+0 model calls this session, 2 served from cache
 ```
 
 **On the MCP move:** <!-- what changed in your code, and whether anything
@@ -286,6 +355,7 @@ behaved differently afterwards. If the rewire didn't work, say exactly where it
 broke — the error text and the last thing that worked. That earns the point in
 full. -->
 
+I 
 
 
 ---

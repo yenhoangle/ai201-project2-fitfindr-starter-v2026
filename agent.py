@@ -17,8 +17,10 @@ import re
 
 import config
 import trace
-from tools import search_listings, suggest_outfit, create_fit_card
+from mcp_client import call_tool
+from tools import suggest_outfit, create_fit_card
 from generate import ModelUnavailable
+from trace import step
 
 
 # ── session state ─────────────────────────────────────────────────────────────
@@ -145,8 +147,13 @@ def run_agent(query: str, wardrobe: dict) -> dict:
                 "size": size_match.group(1) if size_match else None,
                 "max_price": float(price_match.group(1)) if price_match else None,
             }
-            session["search_results"] = search_listings(**session["parsed"])
+            step("parse_query", inputs=query, returned=str(session["parsed"]))
+
+            session["search_results"] = call_tool("search_listings", session["parsed"])
             if not session["search_results"]:
+                step("search_listings (via MCP)", inputs=str(session["parsed"]),
+                     returned=session["search_results"],
+                     note="branch: empty, stopping before suggest_outfit")
                 session["error"] = (
                     "No listings matched those filters. Try broadening the "
                     "description, removing the size, or increasing the maximum price."
@@ -154,16 +161,39 @@ def run_agent(query: str, wardrobe: dict) -> dict:
                 return session
 
             session["selected_item"] = session["search_results"][0]
+            step("search_listings (via MCP)", inputs=str(session["parsed"]),
+                 returned=session["search_results"],
+                 note=f"branch: results, selected {session['selected_item'].get('id')}")
             phase = "outfit"
         elif phase == "outfit":
-            session["outfit_suggestion"] = suggest_outfit(
-                session["selected_item"], session["wardrobe"]
-            )
+            inputs = {
+                "new_item": session["selected_item"].get("title"),
+                "wardrobe_items": len(session["wardrobe"].get("items", [])),
+            }
+            try:
+                session["outfit_suggestion"] = suggest_outfit(
+                    session["selected_item"], session["wardrobe"]
+                )
+            except ModelUnavailable as exc:
+                step("suggest_outfit", inputs=str(inputs), note="model unavailable, stopping")
+                session["error"] = str(exc)
+                return session
+            step("suggest_outfit", inputs=str(inputs), returned=session["outfit_suggestion"])
             phase = "fit_card"
         else:
-            session["fit_card"] = create_fit_card(
-                session["outfit_suggestion"], session["selected_item"]
-            )
+            inputs = {
+                "outfit": session["outfit_suggestion"],
+                "new_item": session["selected_item"].get("title"),
+            }
+            try:
+                session["fit_card"] = create_fit_card(
+                    session["outfit_suggestion"], session["selected_item"]
+                )
+            except ModelUnavailable as exc:
+                step("create_fit_card", inputs=str(inputs), note="model unavailable, stopping")
+                session["error"] = str(exc)
+                return session
+            step("create_fit_card", inputs=str(inputs), returned=session["fit_card"])
             return session
 
     return session

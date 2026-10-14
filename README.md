@@ -390,8 +390,10 @@ I moved `search_listing()` to an mcp by uncommenting the @mcp logic in `mcp_serv
      `python run_eval.py --label after` -->
 
 **What I changed:**
+I decided to change the prompt for the `create_fit_card` function in `tools.py` to sound less preppy and slightly more professional. I made this change because I feel a more professional tone would lend the suggestion more credibility.
 
 **Which failure it was meant to fix:**
+I am not hoping it fix any failures since all my criterias were met, but rather I hope it does not start failing my criteria 4 - `The fit card description is the right size`.
 
 ### Run Log — After
 

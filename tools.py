@@ -276,9 +276,9 @@ def create_fit_card(outfit: str, new_item: dict) -> str:
         )
 
     prompt = (
-        "Write a short, casual social caption for a thrift find. It should sound like a real person "
+        "Write a short, succinct caption for a thrift find. It should sound like a real person "
         "posting online, not a product listing. Mention the item, the price, and the platform once each. "
-        "Use a specific vibe, and keep it to 2-4 sentences.\n\n"
+        "Use a cheerful tone, and keep it to 2-4 sentences.\n\n"
         f"Item details:\n- title: {new_item.get('title', 'item')}\n"
         f"- category: {new_item.get('category', 'unknown')}\n"
         f"- price: ${new_item.get('price', 0)}\n"
@@ -286,5 +286,5 @@ def create_fit_card(outfit: str, new_item: dict) -> str:
         f"- vibe/fit idea: {outfit}\n\n"
         "Write the caption only, with no bullet points or markdown."
     )
-    system = "You are a witty but grounded fashion caption writer. Keep the voice natural, casual, and social-media friendly."
+    system = "You are a grounded fashion caption writer. Keep the voice natural and social-media friendly."
     return generate(prompt, system=system, temperature=0.9)

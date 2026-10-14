@@ -390,7 +390,9 @@ I moved `search_listing()` to an mcp by uncommenting the @mcp logic in `mcp_serv
      `python run_eval.py --label after` -->
 
 **What I changed:**
-I decided to change the prompt for the `create_fit_card` function in `tools.py` to sound less preppy and slightly more professional. I made this change because I feel a more professional tone would lend the suggestion more credibility.
+I decided to change the prompt and the system suggestion for the `create_fit_card` function in `tools.py` to sound less preppy and slightly more professional. 
+My new instructions for the system are `You are a grounded fashion caption writer. Keep the voice natural and social-media friendly.` and `use a cheerful tone`
+I made this change because I feel a more professional tone would lend the suggestion more credibility but I still want the description to be cheerful.
 
 **Which failure it was meant to fix:**
 I am not hoping it fix any failures since all my criterias were met, but rather I hope it does not start failing my criteria 4 - `The fit card description is the right size`.
@@ -408,8 +410,7 @@ I am not hoping it fix any failures since all my criterias were met, but rather 
 
 <!-- If it made things worse, say that. Honestly reported, that earns full
      credit and is more interesting than one that worked. -->
-
-
+The change in the prompt seems to affect how prices are written. The system used more instances of "$" and "dollars" compared to before, where it sometimes uses "bucks." I feel this change makes the description seems more professional and less casual. The fit card description is still under 4 sentences for all 5 of 5 runs so criteria 4 is still met.
 
 ---
 
@@ -419,6 +420,7 @@ I am not hoping it fix any failures since all my criterias were met, but rather 
      you did. "I ran out of time" is fine if it's true. Pretending nothing is
      left is not. -->
 
+I have no miss criterion but I do still want to play around with how the system generate the fit card some more. I stopped where I did because I did not want to use more tokens just on testing tones.
 
 
 <!-- ═════════════════════════════════════════════════════════════════════

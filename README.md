@@ -355,8 +355,7 @@ behaved differently afterwards. If the rewire didn't work, say exactly where it
 broke — the error text and the last thing that worked. That earns the point in
 full. -->
 
-I 
-
+I moved `search_listing()` to an mcp by uncommenting the @mcp logic in `mcp_server.py`and implementing `search_listing()` there. I then imported the function and call it in the `agent.py` file. The move worked and the project works the same as before moving the method over to mcp.
 
 ---
 

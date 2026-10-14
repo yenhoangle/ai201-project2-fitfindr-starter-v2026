@@ -210,17 +210,40 @@ Found these vintage Levi's 501s on Depop for $38 and they are officially my new 
 
 | Criterion | Target | Try 1 | Try 2 | Try 3 | Try 4 | Try 5 | Verdict |
 |---|---|---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |  |  |
+| 1. matching query completes | 4 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 2. impossible query stops early | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 3. item id being passed from one tool function to another matches | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 4. The fit card description is the right size | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
+| 5. The ceiling price of an item is respected | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET (5/5) |
 
 **Real output from one try**, pasted as text, naming the file and function
 that produced it:
 
-```
+Output copied from `results/run_2026-10-13_2209_before.md` produced by `run_eval.py::main`, function `agent.py::run_agent` using scenario "example wardrobe."
 
+```
+### impossible query stops early
+
+- Query: `designer ballgown size XXS under $5`
+- Wardrobe: example
+
+**Try 1**
+
+- stopped early: yes — No listings matched those filters. Try broadening the description, removing the size, or increasing the maximum price.
+- selected_item: (none)
+- search_results: 0
+
+Trace:
+
+```
+[1] parse_query
+      in:  designer ballgown size XXS under $5
+      out: {'description': 'designer ballgown', 'size': 'XXS', 'max_price': 5.0}
+[2] search_listings (via MCP)
+      in:  {'description': 'designer ballgown', 'size': 'XXS', 'max_price': 5.0}
+      out: [] (empty)
+      →    branch: empty, stopping before suggest_outfit
+```
 ```
 
 ---
@@ -245,15 +268,15 @@ that produced it:
 
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | matching query completes | 4 of 5 | MET | trace log printed full run results with branch decisions for 5 of 5 runs |
+| 2 | impossible query stops early | 5 of 5 | MET | trace log printed truncated run results with early stop branch for 5 of 5 runs |
+| 3 | item id being passed from one tool function to another matches | 5 of 5 | MET | trace log printed `lst_004` which matches the id of the suggested track jacket for 5 out of 5 runs |
+| 4 | The fit card description is the right size | 5 of 5 | MET | the fit card description is no more than four sentences for 5 out 5 runs |
+| 5 | The ceiling price of an item is respected | 5 of 5 | MET | the system recommended the correct item priced under the given ceiling price for 5 out of 5 runs |
 
 **Diagnoses**
 
-
+The system has no misses. 
 
 ---
 
@@ -374,12 +397,11 @@ I moved `search_listing()` to an mcp by uncommenting the @mcp logic in `mcp_serv
 
 | Criterion | Target | Try 1 | Try 2 | Try 3 | Try 4 | Try 5 | Verdict |
 |---|---|---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |  |  |
-
+| 1. matching query completes | 4 of 5 | PASS | PASS | PASS | PASS | PASS | MET |
+| 2. impossible query stops early | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET |
+| 3. item id being passed from one tool function to another matches | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET |
+| 4. The fit card description is the right size | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET |
+| 5. The ceiling price of an item is respected | 5 of 5 | PASS | PASS | PASS | PASS | PASS | MET |
 **Did it help, and how do I know:**
 
 <!-- If it made things worse, say that. Honestly reported, that earns full

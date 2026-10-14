@@ -87,10 +87,10 @@ In `tools.py` the `create_fit_card` function has a logic to limit the response t
      search respects a price ceiling — anything, as long as it names a number
      or an observable outcome. -->
 
-The ceiling price of an item is respected
+When the user search for an item with a `maximum_price`, the user will get a listing containing no items that cost more than that price in 5 out of 5 tries. 
 
 **Why this target:**
-When the user search for an item with a `maximum_price`, the user will get a listing containing no items that cost more than that price in 5 out of 5 tries. 
+If a user requested an item with a maximum price then the system needs to respect this limitation 5 out of 5 tries otherwise it is not considered functioning correctly.
 
 
 ---
